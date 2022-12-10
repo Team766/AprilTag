@@ -4,6 +4,8 @@ import com.team766.framework.Procedure;
 import com.team766.framework.Context;
 import com.team766.hal.JoystickReader;
 import com.team766.hal.RobotProvider;
+import com.team766.robot.mechanisms.*;
+
 import com.team766.logging.Category;
 import com.team766.robot.procedures.*;
 
@@ -28,8 +30,9 @@ public class OI extends Procedure {
 		while (true) {
 			// Add driver controls here - make sure to take/release ownership
 			// of mechanisms when appropriate.
+			context.takeOwnership(Robot.drive);
+			Robot.drive.setArcadeDrivePower(joystick0.getAxis(1), joystick1.getAxis(0));
 			
-
 			context.waitFor(() -> RobotProvider.instance.hasNewDriverStationData());
 		}
 	}
