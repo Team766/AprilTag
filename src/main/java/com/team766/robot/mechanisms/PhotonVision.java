@@ -35,5 +35,14 @@ public class PhotonVision extends Mechanism {
     public Transform3d getTransform3d(){
         return target.getBestCameraToTarget();
     }
+    //return a list of x,y,z, and angle from transform3d
+    public List<Double> getXYZAngle(){
+        List<Double> xyz = new ArrayList<Double>();
+        xyz.add(getTransform3d().getTranslation().getX());
+        xyz.add(getTransform3d().getTranslation().getY());
+        xyz.add(getTransform3d().getTranslation().getZ());
+        xyz.add(getTransform3d().getRotation().getAngle());
+        return xyz;
+    }
 
 }
