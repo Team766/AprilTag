@@ -16,34 +16,48 @@ public class PhotonVision extends Mechanism {
     public PhotonVision(){
         camera = new PhotonCamera("photonvision");
         var result = camera.getLatestResult();
-        if(result.hasTargets()){
+        if(hasTarget()){
             targets = result.getTargets();
             target = result.getBestTarget();
         }
-
     }
-
-    public void update(){
+    
+    //check if there is a target
+    public boolean hasTarget(){
         var result = camera.getLatestResult();
-        if(result.hasTargets()){
-            targets = result.getTargets();
-            target = result.getBestTarget();
+        return (result == null ? false : result.hasTargets());
+    }
+
+    //return best target
+    public void update(){
+        if(hasTarget()){
+            targets = camera.getLatestResult().getTargets();
+            target = camera.getLatestResult().getBestTarget();
         }
     }
-    public int getID (){
+    //return a list of all targets
+    public List<PhotonTrackedTarget> getAllTargets(){
+        return targets;
+    }
+
+    //return the id of the target
+    public int getID(){
         return target.getFiducialId();
     }
-    public Transform3d getTransform3d(){
-        return target.getBestCameraToTarget();
-    }
+
     //return a list of x,y,z, and angle from transform3d
     public List<Double> getXYZAngle(){
-        List<Double> xyz = new ArrayList<Double>();
-        xyz.add(getTransform3d().getTranslation().getX());
-        xyz.add(getTransform3d().getTranslation().getY());
-        xyz.add(getTransform3d().getTranslation().getZ());
-        xyz.add(getTransform3d().getRotation().getAngle());
-        return xyz;
+        if(hasTarget()){
+            update();
+            Transform3d target3D = target.getBestCameraToTarget();
+            List<Double> xyz = new ArrayList<Double>();
+            xyz.add(target3D.getTranslation().getX());
+            xyz.add(target3D.getTranslation().getY());
+            xyz.add(target3D.getTranslation().getZ());
+            xyz.add(target3D.getRotation().getAngle());
+            return xyz;
+        }
+        return null;
     }
 
 }

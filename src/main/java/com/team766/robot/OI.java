@@ -33,11 +33,16 @@ public class OI extends Procedure {
 			context.takeOwnership(Robot.drive);
 			context.takeOwnership(Robot.photonVision);
 			Robot.drive.setArcadeDrivePower(joystick0.getAxis(1), joystick1.getAxis(0));
+
 			//log the x,y,z, and angle of the target
+			if(Robot.photonVision.getXYZAngle() == null){
+				log("problem, no target");
+			} else{
 			log("x", Robot.photonVision.getXYZAngle().get(0));
 			log("y", Robot.photonVision.getXYZAngle().get(1));
 			log("z", Robot.photonVision.getXYZAngle().get(2));
 			log("angle", Robot.photonVision.getXYZAngle().get(3));
+			}
 			// Wait until the next update from the driver station.
 			context.waitFor(() -> RobotProvider.instance.hasNewDriverStationData());
 		}
