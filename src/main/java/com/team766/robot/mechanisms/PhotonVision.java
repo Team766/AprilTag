@@ -22,6 +22,7 @@ public class PhotonVision extends Mechanism {
         }
 
     }
+
     public void update(){
         var result = camera.getLatestResult();
         if(result.hasTargets()){

@@ -33,7 +33,6 @@ public class OI extends Procedure {
 			context.takeOwnership(Robot.drive);
 			context.takeOwnership(Robot.photonVision);
 			Robot.drive.setArcadeDrivePower(joystick0.getAxis(1), joystick1.getAxis(0));
-			log();
 			//log the x,y,z, and angle of the target
 			log("x", Robot.photonVision.getXYZAngle().get(0));
 			log("y", Robot.photonVision.getXYZAngle().get(1));
