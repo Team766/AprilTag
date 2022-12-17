@@ -8,7 +8,9 @@ public abstract class LoggingBase {
 	protected Category loggerCategory = Category.PROCEDURES;
 
 	public abstract String getName();
-
+	protected void logB(Boolean a){
+		log(a + "");
+	}
 	protected void log(String message) {
 		log(Severity.INFO, message);
 	}

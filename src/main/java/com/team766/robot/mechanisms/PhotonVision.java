@@ -7,19 +7,17 @@ import edu.wpi.first.math.geometry.Transform3d;
 import org.photonvision.*;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.*;
+import com.team766.logging.Category;
 
 public class PhotonVision extends Mechanism {	
     PhotonCamera camera;
     List<PhotonTrackedTarget> targets;
     PhotonTrackedTarget target;
-
+    
     public PhotonVision(){
-        camera = new PhotonCamera("photonvision");
+        loggerCategory = Category.MECHANISMS;
+        camera = new PhotonCamera("Camera1");
         var result = camera.getLatestResult();
-        if(hasTarget()){
-            targets = result.getTargets();
-            target = result.getBestTarget();
-        }
     }
     
     //check if there is a target
@@ -33,6 +31,7 @@ public class PhotonVision extends Mechanism {
         if(hasTarget()){
             targets = camera.getLatestResult().getTargets();
             target = camera.getLatestResult().getBestTarget();
+            //log(target.toString());
         }
     }
     //return a list of all targets
@@ -50,6 +49,8 @@ public class PhotonVision extends Mechanism {
         if(hasTarget()){
             update();
             Transform3d target3D = target.getBestCameraToTarget();
+            //log("3D data: " + target3D.toString());
+            
             List<Double> xyz = new ArrayList<Double>();
             xyz.add(target3D.getTranslation().getX());
             xyz.add(target3D.getTranslation().getY());
