@@ -8,6 +8,7 @@ import org.photonvision.*;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.*;
 import com.team766.logging.Category;
+import com.team766.simulator.ProgramInterface.RobotPosition;
 
 public class PhotonVision extends Mechanism {	
     PhotonCamera camera;
@@ -61,4 +62,7 @@ public class PhotonVision extends Mechanism {
         return null;
     }
 
+    public List<Double> robotPosition() {
+        
+    }
 }
