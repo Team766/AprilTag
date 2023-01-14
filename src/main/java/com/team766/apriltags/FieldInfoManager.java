@@ -10,7 +10,7 @@ public class FieldInfoManager {
 		COMPETITION
 	}
 
-	private final Map<Integer,AprilTag> fieldTags = new HashMap<Integer, AprilTag>();
+	private static final Map<Integer,AprilTag> fieldTags = new HashMap<Integer, AprilTag>();
 	
 	public FieldInfoManager(Mode mode) {
 		switch (mode) {
@@ -34,11 +34,11 @@ public class FieldInfoManager {
 		}
 	}
 
-	private void addTag(AprilTag tag) {
-		this.fieldTags.put(tag.getId(), tag);
+	private static void addTag(AprilTag tag) {
+		fieldTags.put(tag.getId(), tag);
 	}
 
-	public AprilTag getTagForID(int id) {
+	public static AprilTag getTagForID(int id) {
 		return fieldTags.get(id);
 	}
 }
