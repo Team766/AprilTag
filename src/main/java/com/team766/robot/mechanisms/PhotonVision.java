@@ -4,11 +4,17 @@ import com.team766.framework.Mechanism;
 import com.team766.hal.MotorController;
 import com. team766.hal.RobotProvider;
 import edu.wpi.first.math.geometry.Transform3d;
+import org.apache.commons.lang3.tuple.Pair;
 import org.photonvision.*;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.*;
 import com.team766.logging.Category;
+import com.team766.robot.Robot;
 import com.team766.simulator.ProgramInterface.RobotPosition;
+import com.team766.apriltags.AprilTag;
+import com.team766.apriltags.FieldInfoManager;
+import com.team766.apriltags.Point;
+
 
 public class PhotonVision extends Mechanism {	
     PhotonCamera camera;
@@ -62,7 +68,19 @@ public class PhotonVision extends Mechanism {
         return null;
     }
 
-    public List<Double> robotPosition() {
+    //returns robot x and y coords using gyro angle, target angle, target location, and distance
+    //based off of field coordinate system (https://firstfrc.blob.core.windows.net/frc2023/FieldAssets/2023LayoutMarkingDiagram.pdf)
+    public Point robotPosition() {
+
         
+
+        //todo: use Adrian's point instead of mine
+        //todo: possibly use a direct distance output instead of pythagorean
+        //todo: (not urgent): make it 3d
+        
+        AprilTag tag = FieldInfoManager.getTagForID(getID());
+        double dist = Math.sqrt(Math.pow(getXYZAngle().get(0), 2) + Math.pow(getXYZAngle().get(1), 2));
+        double angle = 90 - Robot.gyro.getGyroYaw() - getXYZAngle().get(3);
+        return new Point(tag.getX() - dist * Math.cos(angle), tag.getY() - dist * Math.sin(angle));
     }
 }
