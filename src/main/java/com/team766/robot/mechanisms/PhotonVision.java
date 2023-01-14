@@ -80,7 +80,7 @@ public class PhotonVision extends Mechanism {
         
         AprilTag tag = FieldInfoManager.getTagForID(getID());
         double dist = Math.sqrt(Math.pow(getXYZAngle().get(0), 2) + Math.pow(getXYZAngle().get(1), 2));
-        double angle = 90 - Robot.gyro.getGyroYaw() - getXYZAngle().get(3);
+        double angle =  getXYZAngle().get(3) + Robot.gyro.getGyroYaw();
         return new XY(tag.getX() - dist * Math.cos(angle), tag.getY() - dist * Math.sin(angle));
     }
 }
